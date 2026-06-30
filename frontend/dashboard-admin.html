@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Operaciones Inteligente | Wanchaq</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+    <link rel="stylesheet" href="css/dashboard-admin.css">
+</head>
+
+<body class="admin-dashboard-body">
+
+    <!-- Fondo animado Liquid Glass -->
+    <div class="background-mesh">
+        <div class="mesh-orb mesh-orb-1"></div>
+        <div class="mesh-orb mesh-orb-2"></div>
+        <div class="mesh-orb mesh-orb-3"></div>
+    </div>
+
+    <!-- Toggle Móvil -->
+    <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir Menú"><i class="fa-solid fa-bars"></i></button>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar__header">
+            <div class="sidebar__logo">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="sidebar__title">Wanchaq SmartCity</div>
+            <div class="sidebar__subtitle">Admin Center</div>
+        </div>
+        
+        <nav class="sidebar__nav">
+            <div class="sidebar__nav-label">General</div>
+            <a href="#" class="nav-item active" data-target="sec-centro">
+                <i class="fa-solid fa-chart-line"></i> Centro de Operaciones
+            </a>
+            <a href="#" class="nav-item" data-target="sec-operaciones">
+                <i class="fa-solid fa-truck-fast"></i> Operaciones
+            </a>
+            <a href="#" class="nav-item" data-target="sec-incidencias">
+                <i class="fa-solid fa-triangle-exclamation"></i> Incidencias
+            </a>
+            
+            <div class="sidebar__nav-label">Administración</div>
+            <a href="#" class="nav-item" data-target="sec-usuarios">
+                <i class="fa-solid fa-users"></i> Gestión de Usuarios
+            </a>
+            <a href="#" class="nav-item" data-target="sec-comunicaciones">
+                <i class="fa-solid fa-bullhorn"></i> Comunicaciones
+            </a>
+            
+            <div class="sidebar__nav-label">Personal</div>
+            <a href="#" class="nav-item" data-target="sec-perfil">
+                <i class="fa-solid fa-user-shield"></i> Mi Perfil
+            </a>
+            <a href="#" class="nav-item" data-target="sec-configuracion">
+                <i class="fa-solid fa-gear"></i> Configuración
+            </a>
+        </nav>
+
+        <div class="sidebar__footer">
+            <a href="#" id="btn-logout" class="nav-item nav-item--logout">
+                <i class="fa-solid fa-power-off"></i> Cerrar Sesión
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        
+        <!-- ==================== CENTRO DE OPERACIONES ==================== -->
+        <section id="sec-centro" class="section active">
+            <header class="section__header">
+                <h1 class="section__title"><i class="fa-solid fa-chart-line"></i> Centro de Operaciones Inteligente</h1>
+            </header>
+            
+            <!-- KPIs -->
+            <div class="kpi-grid">
+                <!-- Usuarios -->
+                <div class="kpi-card kpi-card--blue">
+                    <div class="kpi-card__icon"><i class="fa-solid fa-users"></i></div>
+                    <div class="kpi-card__label">Total Usuarios</div>
+                    <div class="kpi-card__value" id="kpi-usuarios">0</div>
+                </div>
+                <!-- Camiones Activos -->
+                <div class="kpi-card kpi-card--emerald">
+                    <div class="kpi-card__icon"><i class="fa-solid fa-truck"></i></div>
+                    <div class="kpi-card__label">Camiones Activos</div>
+                    <div class="kpi-card__value" id="kpi-camiones">0</div>
+                </div>
+                <!-- Rutas Activas -->
+                <div class="kpi-card kpi-card--emerald">
+                    <div class="kpi-card__icon"><i class="fa-solid fa-route"></i></div>
+                    <div class="kpi-card__label">Rutas Ejecutándose</div>
+                    <div class="kpi-card__value" id="kpi-rutas">0</div>
+                </div>
+                <!-- Incidencias Pendientes -->
+                <div class="kpi-card kpi-card--red">
+                    <div class="kpi-card__icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div class="kpi-card__label">Incidencias Pendientes</div>
+                    <div class="kpi-card__value" id="kpi-incidencias-pendientes">0</div>
+                </div>
+                <!-- Kg Recolectados -->
+                <div class="kpi-card kpi-card--cyan">
+                    <div class="kpi-card__icon"><i class="fa-solid fa-weight-scale"></i></div>
+                    <div class="kpi-card__label">Kg Recolectados</div>
+                    <div class="kpi-card__value" id="kpi-kg">0</div>
+                </div>
+            </div>
+
+            <!-- Mapa Central y Alertas -->
+            <div class="dashboard-grid dashboard-grid--map">
+                <div class="glass-panel" style="padding: 0;">
+                    <div id="map-central" class="map-container"></div>
+                </div>
+                <div class="glass-panel">
+                    <h2 class="glass-panel__title"><i class="fa-solid fa-bell"></i> Alertas Inteligentes</h2>
+                    <ul class="alerts-list" id="lista-alertas">
+                        <!-- Llenado JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Gráficos BI Fila 1 -->
+            <div class="dashboard-grid">
+                <div class="glass-panel">
+                    <h2 class="glass-panel__title"><i class="fa-solid fa-chart-pie"></i> Usuarios por Rol</h2>
+                    <div style="height:250px;"><canvas id="chart-usuarios"></canvas></div>
+                </div>
+                <div class="glass-panel">
+                    <h2 class="glass-panel__title"><i class="fa-solid fa-chart-doughnut"></i> Incidencias por Estado</h2>
+                    <div style="height:250px;"><canvas id="chart-incidencias"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Gráficos BI Fila 2 -->
+            <div class="dashboard-grid">
+                <div class="glass-panel">
+                    <h2 class="glass-panel__title"><i class="fa-solid fa-chart-column"></i> Recolecciones por Tipo (kg)</h2>
+                    <div style="height:250px;"><canvas id="chart-residuos"></canvas></div>
+                </div>
+                <div class="glass-panel">
+                    <h2 class="glass-panel__title"><i class="fa-solid fa-chart-polar-area"></i> Recolecciones por Zona (kg)</h2>
+                    <div style="height:250px;"><canvas id="chart-zonas"></canvas></div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid dashboard-grid--full">
+                <div class="glass-panel">
+                    <h2 class="glass-panel__title"><i class="fa-solid fa-clock-rotate-left"></i> Actividad Reciente del Sistema</h2>
+                    <ul class="activity-list" id="lista-actividad">
+                        <li class="loading-row"><div class="spinner"></div> Cargando actividad...</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== OPERACIONES (Con sub-tabs) ==================== -->
+        <section id="sec-operaciones" class="section">
+            <header class="section__header">
+                <h1 class="section__title"><i class="fa-solid fa-truck-fast"></i> Gestión de Operaciones</h1>
+            </header>
+
+            <div class="glass-panel">
+                <div class="sub-tabs">
+                    <button class="sub-tab active" data-tab="op-camiones">Flota de Camiones</button>
+                    <button class="sub-tab" data-tab="op-rutas">Rutas Asignadas</button>
+                    <button class="sub-tab" data-tab="op-gps">Tracking GPS</button>
+                    <button class="sub-tab" data-tab="op-recolecciones">Historial Recolecciones</button>
+                </div>
+
+                <!-- SUB-PANE CAMIONES -->
+                <div id="op-camiones" class="sub-pane active">
+                    <div class="filter-bar" style="justify-content: flex-end;">
+                        <button class="btn btn--primary" id="btn-nuevo-camion"><i class="fa-solid fa-plus"></i> Registrar Camión</button>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table" id="table-camiones">
+                            <thead>
+                                <tr><th>Placa</th><th>Capacidad</th><th>Estado</th><th>Conductor</th><th>Ruta Asignada</th><th>Acciones</th></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SUB-PANE RUTAS -->
+                <div id="op-rutas" class="sub-pane">
+                    <div class="filter-bar" style="justify-content: flex-end;">
+                        <button class="btn btn--primary" id="btn-nueva-ruta"><i class="fa-solid fa-plus"></i> Crear Ruta</button>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table" id="table-rutas">
+                            <thead>
+                                <tr><th>Zona</th><th>Camión</th><th>Conductor</th><th>Horario</th><th>Días</th><th>Acciones</th></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SUB-PANE GPS -->
+                <div id="op-gps" class="sub-pane">
+                    <div class="map-container map-container--large" id="map-gps-full">
+                        <div class="map-info-overlay">
+                            <div class="map-info-overlay__title">Info Tracking en Vivo</div>
+                            <div class="map-info-overlay__row">
+                                <span class="map-info-overlay__label">Camiones en ruta:</span>
+                                <span class="map-info-overlay__value" id="gps-total-camiones">0</span>
+                            </div>
+                            <div class="map-info-overlay__row">
+                                <span class="map-info-overlay__label">Última act.:</span>
+                                <span class="map-info-overlay__value" id="gps-last-update">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-PANE RECOLECCIONES -->
+                <div id="op-recolecciones" class="sub-pane">
+                    <div class="filter-bar">
+                        <select class="form-select" id="filtro-zona" style="width: auto; margin: 0;">
+                            <option value="">Todas las Zonas</option>
+                        </select>
+                        <select class="form-select" id="filtro-tipo" style="width: auto; margin: 0;">
+                            <option value="">Todos los Tipos</option>
+                        </select>
+                        <button class="btn btn--secondary" id="btn-aplicar-filtros"><i class="fa-solid fa-filter"></i> Filtrar</button>
+                        <button class="btn btn--primary" id="btn-export-csv" style="margin-left: auto;"><i class="fa-solid fa-file-csv"></i> Exportar CSV</button>
+                    </div>
+                    <div class="table-wrap">
+                        <table class="data-table" id="table-recolecciones">
+                            <thead>
+                                <tr><th>Fecha/Hora</th><th>Zona</th><th>Tipo Residuo</th><th>Peso (kg)</th><th>Operador</th></tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== INCIDENCIAS (KANBAN) ==================== -->
+        <section id="sec-incidencias" class="section">
+            <header class="section__header">
+                <h1 class="section__title"><i class="fa-solid fa-triangle-exclamation"></i> Gestión de Incidencias</h1>
+            </header>
+            
+            <div class="kanban">
+                <!-- Columna Pendientes -->
+                <div class="kanban__column" id="kanban-pendiente" data-estado="pendiente">
+                    <div class="kanban__column-header">
+                        <div class="kanban__column-dot kanban__column-dot--pending"></div>
+                        <h2 class="kanban__column-title">Pendientes</h2>
+                        <span class="kanban__column-count" id="count-pendiente">0</span>
+                    </div>
+                    <div class="kanban__cards"></div>
+                </div>
+
+                <!-- Columna En Proceso -->
+                <div class="kanban__column" id="kanban-en-proceso" data-estado="en_proceso">
+                    <div class="kanban__column-header">
+                        <div class="kanban__column-dot kanban__column-dot--process"></div>
+                        <h2 class="kanban__column-title">En Proceso</h2>
+                        <span class="kanban__column-count" id="count-en-proceso">0</span>
+                    </div>
+                    <div class="kanban__cards"></div>
+                </div>
+
+                <!-- Columna Resueltas -->
+                <div class="kanban__column" id="kanban-resuelto" data-estado="resuelto">
+                    <div class="kanban__column-header">
+                        <div class="kanban__column-dot kanban__column-dot--resolved"></div>
+                        <h2 class="kanban__column-title">Resueltas</h2>
+                        <span class="kanban__column-count" id="count-resuelto">0</span>
+                    </div>
+                    <div class="kanban__cards"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== GESTIÓN DE USUARIOS ==================== -->
+        <section id="sec-usuarios" class="section">
+            <header class="section__header">
+                <h1 class="section__title"><i class="fa-solid fa-users"></i> Directorio de Usuarios</h1>
+            </header>
+
+            <div class="glass-panel">
+                <div class="filter-bar">
+                    <button class="filter-pill active" data-role="todos">Todos</button>
+                    <button class="filter-pill" data-role="admin">Administradores</button>
+                    <button class="filter-pill" data-role="operador">Operadores</button>
+                    <button class="filter-pill" data-role="ciudadano">Ciudadanos</button>
+                    
+                    <div style="margin-left: auto; display: flex; gap: 10px;">
+                        <button class="btn btn--secondary" id="btn-crear-operador"><i class="fa-solid fa-user-gear"></i> Crear Operador</button>
+                        <button class="btn btn--primary" id="btn-crear-admin"><i class="fa-solid fa-user-shield"></i> Crear Admin</button>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table class="data-table" id="table-usuarios">
+                        <thead>
+                            <tr><th>Nombre / DNI</th><th>Correo</th><th>Rol</th><th>Zona</th><th>Estado</th><th>Último Login</th><th>Acciones</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== COMUNICACIONES ==================== -->
+        <section id="sec-comunicaciones" class="section">
+            <header class="section__header">
+                <h1 class="section__title"><i class="fa-solid fa-bullhorn"></i> Centro de Comunicaciones</h1>
+            </header>
+
+            <div class="dashboard-grid">
+                <div class="glass-panel">
+                    <h2 class="glass-panel__title"><i class="fa-solid fa-paper-plane"></i> Enviar Nueva Notificación</h2>
+                    <form id="form-notificacion">
+                        <div class="form-group">
+                            <label class="form-label">Destinatarios</label>
+                            <select class="form-select" id="notif-destinatario" required>
+                                <option value="todos">Todos los Usuarios</option>
+                                <option value="ciudadanos">Todos los Ciudadanos</option>
+                                <option value="operadores">Todos los Operadores</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Título</label>
+                            <input type="text" class="form-input" id="notif-titulo" placeholder="Ej. Cambio de ruta en San Borja" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mensaje</label>
+                            <textarea class="form-textarea" id="notif-mensaje" placeholder="Detalle informativo..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--primary btn--full"><i class="fa-solid fa-paper-plane"></i> Emitir Notificación Oficial</button>
+                    </form>
+                </div>
+
+                <div class="glass-panel">
+                    <h2 class="glass-panel__title"><i class="fa-solid fa-history"></i> Historial de Envíos</h2>
+                    <div class="notif-history" id="lista-notificaciones">
+                        <!-- JS Llenado -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MI PERFIL ==================== -->
+        <section id="sec-perfil" class="section">
+            <header class="section__header">
+                <h1 class="section__title"><i class="fa-solid fa-user-shield"></i> Mi Perfil Administrativo</h1>
+            </header>
+
+            <div class="glass-panel profile-card">
+                <div class="profile-card__avatar">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <h2 class="profile-card__name" id="perfil-nombre">-</h2>
+                <div class="profile-card__email" id="perfil-correo">-</div>
+                <div class="profile-card__role">Administrador del Sistema</div>
+
+                <div class="profile-card__details">
+                    <div class="modal__row">
+                        <span class="modal__label">DNI</span>
+                        <span class="modal__value" id="perfil-dni">-</span>
+                    </div>
+                    <div class="modal__row">
+                        <span class="modal__label">Fecha de Registro</span>
+                        <span class="modal__value" id="perfil-registro">-</span>
+                    </div>
+                    <div class="modal__row">
+                        <span class="modal__label">Último Acceso</span>
+                        <span class="modal__value" id="perfil-login">-</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CONFIGURACIÓN ==================== -->
+        <section id="sec-configuracion" class="section">
+            <header class="section__header">
+                <h1 class="section__title"><i class="fa-solid fa-gear"></i> Configuración del Sistema</h1>
+            </header>
+
+            <div class="glass-panel config-section">
+                <h2 class="config-section__heading">Actualizar Datos Personales</h2>
+                <form id="form-configuracion">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nombre Completo</label>
+                            <input type="text" class="form-input" id="conf-nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Correo Electrónico</label>
+                            <input type="email" class="form-input" id="conf-correo" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 24px;">
+                        <label class="form-label">Nueva Contraseña (dejar en blanco para mantener actual)</label>
+                        <input type="password" class="form-input" id="conf-password" placeholder="••••••••">
+                    </div>
+
+                    <h2 class="config-section__heading" style="margin-top: 30px;">Preferencias del Sistema</h2>
+                    <label class="config-toggle">
+                        <input type="checkbox" id="conf-animaciones" checked>
+                        <span class="config-toggle__label">Activar efectos visuales Liquid Glass Premium</span>
+                    </label>
+
+                    <button type="submit" class="btn btn--primary btn--full" style="margin-top: 20px;">
+                        <i class="fa-solid fa-save"></i> Guardar Configuración
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== SISTEMA DE MODALES ==================== -->
+    <div id="modal-container" class="modal-overlay">
+        <div class="modal">
+            <button class="modal__close" id="modal-btn-close"><i class="fa-solid fa-xmark"></i></button>
+            <h2 class="modal__title" id="modal-title">Título Modal</h2>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Contenedor para Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Templates Ocultos para Formularios de Modal -->
+    <template id="tpl-form-camion">
+        <form id="form-camion">
+            <input type="hidden" id="camion-id">
+            <div class="form-group">
+                <label class="form-label">Placa</label>
+                <input type="text" class="form-input" id="camion-placa" required placeholder="ABC-123">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Capacidad (kg)</label>
+                <input type="number" class="form-input" id="camion-cap" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Conductor Asignado</label>
+                <select class="form-select" id="camion-conductor">
+                    <option value="">Sin Asignar</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Estado</label>
+                <select class="form-select" id="camion-estado" required>
+                    <option value="activo">Activo</option>
+                    <option value="mantenimiento">Mantenimiento</option>
+                    <option value="inactivo">Inactivo</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full"><i class="fa-solid fa-save"></i> Guardar Camión</button>
+        </form>
+    </template>
+
+    <template id="tpl-form-ruta">
+        <form id="form-ruta">
+            <input type="hidden" id="ruta-id">
+            <div class="form-group">
+                <label class="form-label">Zona Asignada</label>
+                <select class="form-select" id="ruta-zona" required></select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Camión Asignado</label>
+                <select class="form-select" id="ruta-camion" required></select>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Hora Inicio (HH:MM)</label>
+                    <input type="time" class="form-input" id="ruta-inicio" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Hora Fin (HH:MM)</label>
+                    <input type="time" class="form-input" id="ruta-fin" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full"><i class="fa-solid fa-save"></i> Guardar Ruta</button>
+        </form>
+    </template>
+
+    <template id="tpl-form-usuario">
+        <form id="form-usuario">
+            <input type="hidden" id="usr-rol-type">
+            <div class="form-group">
+                <label class="form-label">Nombre Completo</label>
+                <input type="text" class="form-input" id="usr-nombre" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">DNI</label>
+                <input type="text" class="form-input" id="usr-dni" pattern="\d{8}" title="Debe tener 8 dígitos" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-input" id="usr-correo" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Contraseña Temporal</label>
+                <input type="password" class="form-input" id="usr-pass" required>
+            </div>
+            <div class="form-group" id="grp-zona-operador" style="display:none;">
+                <label class="form-label">Zona Asignada</label>
+                <select class="form-select" id="usr-zona"></select>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full"><i class="fa-solid fa-save"></i> Guardar Usuario</button>
+        </form>
+    </template>
+
+    <template id="tpl-form-editar-user">
+        <form id="form-editar-user">
+            <input type="hidden" id="ed-usr-id">
+            <div class="form-group">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-input" id="ed-usr-nombre" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Correo</label>
+                <input type="email" class="form-input" id="ed-usr-correo" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">DNI</label>
+                <input type="text" class="form-input" id="ed-usr-dni" required>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full"><i class="fa-solid fa-save"></i> Actualizar Usuario</button>
+        </form>
+    </template>
+
+    <!-- Scripts de Librerías -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Lógica Core -->
+    <script src="js/dashboard-admin.js"></script>
+</body>
+</html>

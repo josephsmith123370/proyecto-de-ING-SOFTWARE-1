@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Administrador | Sistema de Gestión de Residuos Wanchaq</title>
+
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos CSS Base Ciudadano -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Estilos Liquid Glass para Admin -->
+    <link rel="stylesheet" href="css/admin-login.css">
+    <link rel="stylesheet" href="css/admin-register.css">
+</head>
+
+<body class="admin-body">
+
+    <!-- Fondo animado (Liquid Effect) -->
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="auth-layout admin-layout">
+
+        <!-- Panel Izquierdo: Ilustración y Mensaje Institucional -->
+        <section class="auth-panel admin-panel">
+            <div class="panel-content">
+                <div class="panel-illustration admin-illustration">
+                    <i class="fa-solid fa-user-shield" style="font-size: 8rem; color: rgba(255,255,255,0.9); filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));"></i>
+                </div>
+                <h2 class="panel-title">Alta de Administradores</h2>
+                <p class="panel-description">
+                    Crea tu cuenta administrativa utilizando el Código Maestro autorizado. Podrás gestionar a los ciudadanos, visualizar rutas y administrar las recompensas.
+                </p>
+                <div class="panel-features">
+                    <div class="panel-feature">
+                        <div class="panel-feature-icon">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <span>Cifrado de extremo a extremo para credenciales.</span>
+                    </div>
+                    <div class="panel-feature">
+                        <div class="panel-feature-icon">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <span>Gestión integral de la base de datos municipal.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel Derecho: Formulario de Registro (Estilo Liquid Glass) -->
+        <section class="auth-form-section glass-section">
+            <div class="form-container glass-panel register-glass-panel">
+
+                <!-- Logo y Cabecera -->
+                <header class="form-header admin-header">
+                    <div class="logo-container">
+                        <i class="fa-solid fa-user-plus logo-icon"></i>
+                    </div>
+                    <h1 class="form-title text-white">Crear Credenciales</h1>
+                    <p class="form-subtitle text-muted">Registro de administrador del sistema</p>
+                </header>
+
+                <!-- Formulario de Registro -->
+                <form id="form-admin-register" class="login-form">
+
+                    <!-- Nombre Completo -->
+                    <div class="form-group">
+                        <label for="nombre">
+                            <i class="fa-regular fa-user"></i> Nombre Completo
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="text" id="nombre" name="nombre" required placeholder="Ej. Juan Pérez">
+                            <div class="focus-border"></div>
+                        </div>
+                    </div>
+
+                    <!-- DNI -->
+                    <div class="form-group">
+                        <label for="dni">
+                            <i class="fa-regular fa-id-card"></i> DNI
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="text" id="dni" name="dni" required placeholder="8 dígitos numéricos" maxlength="8" pattern="\d{8}">
+                            <div class="focus-border"></div>
+                        </div>
+                    </div>
+
+                    <!-- Correo Institucional -->
+                    <div class="form-group">
+                        <label for="correo">
+                            <i class="fa-regular fa-envelope"></i> Correo Institucional
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="email" id="correo" name="correo" required placeholder="admin@wanchaq.gob.pe">
+                            <div class="focus-border"></div>
+                        </div>
+                    </div>
+
+                    <!-- Contraseña -->
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fa-solid fa-lock"></i> Contraseña
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" name="password" required placeholder="Mínimo 6 caracteres" minlength="6">
+                            <button type="button" class="toggle-password btn-toggle-pwd" aria-label="Mostrar/Ocultar contraseña">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <div class="focus-border"></div>
+                        </div>
+                    </div>
+
+                    <!-- Confirmar Contraseña -->
+                    <div class="form-group">
+                        <label for="confirm_password">
+                            <i class="fa-solid fa-check-double"></i> Confirmar Contraseña
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="password" id="confirm_password" name="confirm_password" required placeholder="Repite la contraseña">
+                            <button type="button" class="toggle-password btn-toggle-pwd" aria-label="Mostrar/Ocultar contraseña">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <div class="focus-border"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- Mensaje de Error (oculto por defecto) -->
+                        <div id="mensaje-error" class="mensaje-error" style="display: none;">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <span id="texto-error">Error al registrar</span>
+                        </div>
+
+                        <!-- Mensaje de Éxito (oculto por defecto) -->
+                        <div id="mensaje-exito" class="mensaje-exito" style="display: none;">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span id="texto-exito">Administrador creado exitosamente</span>
+                        </div>
+
+                        <!-- Botón de Envío -->
+                        <button type="submit" class="btn-submit" id="btn-submit">
+                            <span>Crear Administrador</span>
+                            <i class="fa-solid fa-user-plus"></i>
+                            <div class="spinner" style="display: none;"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="form-footer">
+                    <p>¿Ya tienes credenciales? <a href="admin-login.html">Iniciar Sesión</a></p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/admin-register.js"></script>
+</body>
+
+</html>

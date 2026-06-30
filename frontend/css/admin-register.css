@@ -1,0 +1,49 @@
+/* 
+ * ============================================================
+ * admin-register.css
+ * Extensión de estilos para el formulario de registro (Liquid)
+ * ============================================================
+ */
+
+.register-glass-panel {
+    max-width: 800px; /* Panel más ancho para 2 columnas */
+    padding: 35px 45px !important;
+}
+
+/* Grid para organizar el formulario en dos columnas en pantallas grandes */
+.grid-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 30px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+}
+
+/* Ajustes específicos de mensajes de éxito (Liquid) */
+.mensaje-exito {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #6EE7B7;
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: slideDown 0.5s ease-out;
+}
+
+/* Responsive: 1 columna en pantallas medianas o pequeñas */
+@media (max-width: 900px) {
+    .grid-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .register-glass-panel {
+        max-width: 450px;
+    }
+}

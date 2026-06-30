@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Portal del Ciudadano - Sistema de Gestión Inteligente de Residuos Sólidos de Wanchaq.">
+    <title>Portal Ciudadano | Wanchaq Smart City</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard-ciudadano.css">
+</head>
+
+<body>
+    <!-- Background Elements for Liquid Glass effect -->
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+    <div class="bg-shape bg-shape-3"></div>
+
+    <div class="dashboard-layout glass-container">
+
+        <!-- ===== SIDEBAR LATERAL ===== -->
+        <aside class="sidebar glass-panel" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>WANCHAQ</span>
+                </div>
+                <button class="close-sidebar-btn" id="closeSidebarBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-menu-container">
+                <ul class="sidebar-menu">
+                    <li class="menu-item active" data-target="sec-inicio">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Inicio</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-recoleccion">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        <span>Mi Recolección</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-seguimiento">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>Seguimiento Real</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-reportar">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Reportar Incidencia</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-mis-incidencias">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        <span>Mis Incidencias</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-notificaciones">
+                        <i class="fa-regular fa-bell"></i>
+                        <span>Notificaciones</span>
+                    </li>
+                </ul>
+
+                <ul class="sidebar-menu bottom-menu">
+                    <li class="menu-item" data-target="sec-perfil">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Mi Perfil</span>
+                    </li>
+                    <li class="menu-item btn-logout" id="btnLogoutMenu">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Cerrar Sesión</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- ===== CONTENIDO PRINCIPAL ===== -->
+        <div class="main-wrapper">
+            
+            <!-- Navbar Superior -->
+            <header class="top-navbar glass-panel">
+                <div class="navbar-left">
+                    <button class="open-sidebar-btn" id="openSidebarBtn">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h2 class="page-title" id="pageTitle">Inicio</h2>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="user-profile-widget">
+                        <div class="user-avatar" id="userAvatar">C</div>
+                        <div class="user-info-desktop">
+                            <span class="user-name" id="userName">Cargando...</span>
+                            <span class="user-role" id="userRole">Ciudadano</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Área de Secciones -->
+            <main class="content-area">
+
+                <!-- ================= SECCIÓN: INICIO ================= -->
+                <section id="sec-inicio" class="dashboard-section active fade-in">
+                    <!-- Banner -->
+                    <div class="welcome-banner glass-card">
+                        <div class="welcome-content">
+                            <h1 id="welcomeTitle">Hola, Ciudadano</h1>
+                            <p>Bienvenido al Portal Ciudadano de Wanchaq.</p>
+                            <p class="user-meta" id="welcomeMeta">Zona: Cargando... | Registrado el: Cargando...</p>
+                        </div>
+                    </div>
+
+                    <!-- Tarjetas Principales -->
+                    <div class="stats-grid">
+                        <div class="stat-card glass-card">
+                            <div class="stat-icon green">
+                                <i class="fa-solid fa-truck-fast"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="dashNextCollection">Cargando...</div>
+                                <div class="stat-label">Próxima Recolección</div>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-icon blue">
+                                <i class="fa-solid fa-route"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="dashTruckStatus">Cargando...</div>
+                                <div class="stat-label">Estado del Camión</div>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-icon yellow">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="dashIncidents">0</div>
+                                <div class="stat-label">Mis Incidencias</div>
+                            </div>
+                        </div>
+                        <div class="stat-card glass-card">
+                            <div class="stat-icon red">
+                                <i class="fa-solid fa-bell"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value" id="dashNotifications">0</div>
+                                <div class="stat-label">Notificaciones Nuevas</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: MI RECOLECCIÓN ================= -->
+                <section id="sec-recoleccion" class="dashboard-section fade-in">
+                    <div class="section-header glass-card">
+                        <h2>Mi Recolección</h2>
+                        <p>Información detallada sobre el servicio de recolección en tu zona.</p>
+                    </div>
+
+                    <div id="recoleccionContent" class="glass-card content-padding">
+                        <div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Cargando información...</div>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: SEGUIMIENTO EN TIEMPO REAL ================= -->
+                <section id="sec-seguimiento" class="dashboard-section fade-in map-section">
+                    <div class="section-header glass-card map-header">
+                        <h2>Seguimiento en Tiempo Real</h2>
+                        <p>Visualiza la posición del camión recolector asignado a tu zona (se actualiza cada 30s).</p>
+                        <div class="truck-status-badge" id="trackingStatus">Cargando estado...</div>
+                    </div>
+
+                    <div class="map-container glass-card">
+                        <div id="map"></div>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: REPORTAR INCIDENCIA ================= -->
+                <section id="sec-reportar" class="dashboard-section fade-in">
+                    <div class="section-header glass-card">
+                        <h2>Reportar Incidencia</h2>
+                        <p>Ayúdanos a mantener Wanchaq limpio reportando problemas en la vía pública.</p>
+                    </div>
+
+                    <div class="report-form-container glass-card content-padding">
+                        <form id="formReporte" class="modern-form">
+                            <div class="form-group">
+                                <label for="descripcionReporte">Descripción detallada de la incidencia</label>
+                                <textarea id="descripcionReporte" rows="4" placeholder="Ej. Contenedor lleno en la esquina..." required></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="latitudReporte">Latitud (Opcional)</label>
+                                    <input type="text" id="latitudReporte" placeholder="-13.5226">
+                                </div>
+                                <div class="form-group">
+                                    <label for="longitudReporte">Longitud (Opcional)</label>
+                                    <input type="text" id="longitudReporte" placeholder="-71.9673">
+                                </div>
+                            </div>
+                            <small class="form-hint">* En un dispositivo móvil, podrías usar el GPS integrado.</small>
+
+                            <div class="form-group" style="margin-top: 1rem;">
+                                <label for="fotoReporte">URL de Fotografía (Opcional)</label>
+                                <input type="url" id="fotoReporte" placeholder="https://ejemplo.com/foto.jpg">
+                            </div>
+
+                            <button type="submit" class="btn-primary glass-btn">
+                                <i class="fa-solid fa-paper-plane"></i> Enviar Reporte
+                            </button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: MIS INCIDENCIAS ================= -->
+                <section id="sec-mis-incidencias" class="dashboard-section fade-in">
+                    <div class="section-header glass-card">
+                        <h2>Mis Incidencias</h2>
+                        <p>Historial y estado de las incidencias que has reportado.</p>
+                    </div>
+
+                    <div class="table-container glass-card content-padding">
+                        <div id="incidenciasContent">
+                            <div class="loading-state"><i class="fa-solid fa-spinner fa-spin"></i> Cargando incidencias...</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: NOTIFICACIONES ================= -->
+                <section id="sec-notificaciones" class="dashboard-section fade-in">
+                    <div class="section-header glass-card">
+                        <h2>Notificaciones</h2>
+                        <p>Avisos importantes de la municipalidad.</p>
+                    </div>
+
+                    <div class="notifications-list" id="notificacionesContent">
+                        <div class="loading-state glass-card"><i class="fa-solid fa-spinner fa-spin"></i> Cargando notificaciones...</div>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: PERFIL ================= -->
+                <section id="sec-perfil" class="dashboard-section fade-in">
+                    <div class="section-header glass-card">
+                        <h2>Mi Perfil</h2>
+                        <p>Gestiona tu información personal.</p>
+                    </div>
+
+                    <div class="profile-container glass-card content-padding">
+                        <div class="profile-details-form">
+                            <form id="formPerfil" class="modern-form">
+                                <div class="form-group">
+                                    <label>Nombre Completo (Solo lectura)</label>
+                                    <input type="text" id="inputProfileName" readonly class="glass-input-readonly">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>DNI (Solo lectura)</label>
+                                        <input type="text" id="inputProfileDni" readonly class="glass-input-readonly">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Zona Asignada (Solo lectura)</label>
+                                        <input type="text" id="inputProfileZona" readonly class="glass-input-readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Correo Electrónico (Editable)</label>
+                                    <input type="email" id="inputProfileEmail" required class="glass-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Nueva Contraseña (Opcional)</label>
+                                    <input type="password" id="inputProfilePassword" placeholder="Dejar en blanco para no cambiar" class="glass-input">
+                                </div>
+                                <button type="submit" class="btn-primary glass-btn" style="margin-top: 1rem;">
+                                    <i class="fa-solid fa-save"></i> Actualizar Perfil
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Script SPA Dashboard -->
+    <script src="js/dashboard-ciudadano.js"></script>
+</body>
+
+</html>

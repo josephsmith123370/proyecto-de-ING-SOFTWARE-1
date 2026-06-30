@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Registro de ciudadanos - Sistema de Gestión Inteligente de Residuos Sólidos de la Municipalidad Distrital de Wanchaq, Cusco.">
+    <title>Registro de Ciudadano | Gestión de Residuos Wanchaq</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <div class="auth-layout">
+
+        <!-- Panel Izquierdo: Ilustración y Mensaje Institucional -->
+        <section class="auth-panel">
+            <div class="panel-content">
+                <div class="panel-illustration">
+                    <img src="img/registro-ilustracion.png" alt="Sostenibilidad y Reciclaje en Wanchaq">
+                </div>
+                <h2 class="panel-title">Wanchaq Sostenible e Inteligente</h2>
+                <p class="panel-description">
+                    Participa activamente en la mejora de la limpieza pública, reporta puntos críticos de basura y
+                    acumula puntos ecológicos por tus buenas acciones ambientales.
+                </p>
+                <div class="panel-features">
+                    <div class="panel-feature">
+                        <div class="panel-feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 14 14"></polyline>
+                            </svg>
+                        </div>
+                        <span>Monitoreo en tiempo real de camiones recolectores.</span>
+                    </div>
+                    <div class="panel-feature">
+                        <div class="panel-feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <span>Acumula puntos ecológicos y canjea beneficios.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel Derecho: Formulario de Registro -->
+        <section class="auth-form-section">
+            <div class="form-container">
+
+                <!-- Logo y Cabecera -->
+                <header class="form-header">
+                    <div class="form-logo">
+                        <div class="form-logo-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                            </svg>
+                        </div>
+                        <div class="form-logo-text">
+                            <span class="logo-name">MUNICIPALIDAD DE WANCHAQ</span>
+                            <span class="logo-sub">Gestión Ambiental</span>
+                        </div>
+                    </div>
+                    <h1 class="form-title">Registro de Ciudadano</h1>
+                    <p class="form-subtitle">Únete al sistema inteligente de gestión de residuos de Wanchaq</p>
+                </header>
+
+                <!-- Mensaje de Feedback -->
+                <div id="mensaje" class="message" role="alert" aria-live="polite"></div>
+
+                <!-- Formulario -->
+                <form id="formRegistro" class="auth-form" novalidate>
+
+                    <!-- Campo: Nombre completo -->
+                    <div class="input-group">
+                        <label for="nombre">Nombre Completo</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            <input type="text" id="nombre" name="nombre" placeholder="Ej: Juan Pérez Quispe"
+                                autocomplete="name" required>
+                        </div>
+                    </div>
+
+                    <!-- Campo: DNI -->
+                    <div class="input-group">
+                        <label for="dni">DNI</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2" />
+                                <path d="M7 10h0M7 14h4M15 10h2M15 14h2" />
+                            </svg>
+                            <input type="text" id="dni" name="dni" placeholder="Ej: 70123456" maxlength="8"
+                                pattern="\d{8}" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <!-- Campo: Correo -->
+                    <div class="input-group">
+                        <label for="correo">Correo Electrónico</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="4" width="20" height="16" rx="2" />
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                            </svg>
+                            <input type="email" id="correo" name="correo" placeholder="ejemplo@correo.com"
+                                autocomplete="email" required>
+                        </div>
+                    </div>
+
+                    <!-- Campo: Contraseña -->
+                    <div class="input-group">
+                        <label for="password">Contraseña</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                            </svg>
+                            <input type="password" id="password" name="password" placeholder="Mínimo 6 caracteres"
+                                minlength="6" autocomplete="new-password" required>
+
+                            <button type="button" class="toggle-password" id="togglePassword"
+                                aria-label="Mostrar contraseña">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                    <circle cx="12" cy="12" r="3" />
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- Indicador de fortaleza -->
+                        <div class="password-strength">
+                            <div class="strength-bar" id="str1"></div>
+                            <div class="strength-bar" id="str2"></div>
+                            <div class="strength-bar" id="str3"></div>
+                            <div class="strength-bar" id="str4"></div>
+                        </div>
+                        <span class="strength-text" id="strengthText"></span>
+                    </div>
+
+                    <!-- Botón de Registro -->
+                    <button type="submit" class="btn-primary" id="btnRegistro">
+                        <span class="spinner"></span>
+                        <span class="btn-text">Registrar Cuenta</span>
+                    </button>
+
+                </form>
+
+                <!-- Footer de Navegación -->
+                <footer class="auth-footer">
+                    <p>¿Ya tienes una cuenta? <a href="login.html">Inicia Sesión</a></p>
+                </footer>
+
+                <!-- Badge Institucional -->
+                <div class="institutional-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 2L3 7v2h18V7L12 2zm0 2.18L17.36 7H6.64L12 4.18zM5 21h14v-2H5v2zm0-4h14v-6H5v6zm2-4h10v2H7v-2z" />
+                    </svg>
+                    <span>Municipalidad Distrital de Wanchaq — Cusco</span>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <script src="js/registro.js"></script>
+</body>
+
+</html>

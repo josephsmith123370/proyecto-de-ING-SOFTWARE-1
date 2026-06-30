@@ -1,0 +1,21 @@
+/* 
+ * ============================================================
+ * dashboard-operador.css
+ * Estilos específicos para el dashboard de operador
+ * ============================================================
+ */
+
+ .placeholder-content {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 3rem;
+    text-align: center;
+    color: #64748b;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px dashed #cbd5e1;
+}
+
+.placeholder-content p {
+    font-size: 1.1rem;
+    font-weight: 500;
+}

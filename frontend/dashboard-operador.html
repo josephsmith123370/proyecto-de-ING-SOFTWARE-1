@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Dashboard de Operador - Sistema de Gestión Inteligente de Residuos Sólidos de Wanchaq.">
+    <title>Dashboard Operador | Gestión de Residuos Wanchaq</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard-ciudadano.css"> <!-- Reutilizando estilos base de Dashboard -->
+    <link rel="stylesheet" href="css/dashboard-operador.css">
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- ===== SIDEBAR LATERAL ===== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>WANCHAQ OPERADOR</span>
+                </div>
+                <button class="close-sidebar-btn" id="closeSidebarBtn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-menu-container">
+                <ul class="sidebar-menu">
+                    <li class="menu-item active" data-target="sec-inicio">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>Dashboard Operador</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-ruta">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>Mi Ruta</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-camion">
+                        <i class="fa-solid fa-truck-moving"></i>
+                        <span>Mi Camión</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-recolecciones">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        <span>Registrar Recolecciones</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-incidencias">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Reportar Incidencias</span>
+                    </li>
+                    <li class="menu-item" data-target="sec-notificaciones">
+                        <i class="fa-regular fa-bell"></i>
+                        <span>Ver Notificaciones</span>
+                    </li>
+                </ul>
+
+                <ul class="sidebar-menu bottom-menu">
+                    <li class="menu-item" data-target="sec-perfil">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Mi Perfil</span>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- ===== CONTENIDO PRINCIPAL ===== -->
+        <div class="main-wrapper">
+            
+            <!-- Navbar Superior -->
+            <header class="top-navbar">
+                <div class="navbar-left">
+                    <button class="open-sidebar-btn" id="openSidebarBtn">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h2 class="page-title" id="pageTitle">Dashboard Operador</h2>
+                </div>
+                
+                <div class="navbar-right">
+                    <div class="eco-points-badge" title="Ruta Activa" style="background: rgba(21, 101, 192, 0.1); color: #1565C0;">
+                        <i class="fa-solid fa-route"></i>
+                        <span>Zona Norte - En progreso</span>
+                    </div>
+                    
+                    <div class="user-profile-widget">
+                        <div class="user-avatar" id="userAvatar">O</div>
+                        <div class="user-info-desktop">
+                            <span class="user-name" id="userName">Operador</span>
+                            <span class="user-role" id="userRole">Conductor</span>
+                        </div>
+                        <button class="btn-logout-icon" id="btnLogout" title="Cerrar Sesión">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Área de Secciones -->
+            <main class="content-area">
+
+                <!-- ================= SECCIÓN: INICIO ================= -->
+                <section id="sec-inicio" class="dashboard-section active fade-in">
+                    <!-- Banner -->
+                    <div class="welcome-banner" style="background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);">
+                        <div class="welcome-content">
+                            <span class="greeting">Portal de Operaciones</span>
+                            <h1 id="welcomeTitle">¡Buen turno!</h1>
+                            <p>Revisa tu ruta asignada, el estado de tu vehículo y asegúrate de registrar todas las recolecciones del día.</p>
+                        </div>
+                        <div class="welcome-illustration">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fa-solid fa-route"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">45%</div>
+                                <div class="stat-label">Progreso de Ruta</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green">
+                                <i class="fa-solid fa-weight-scale"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">2.5 t</div>
+                                <div class="stat-label">Toneladas Recolectadas</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon yellow">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-value">0</div>
+                                <div class="stat-label">Incidencias Hoy</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: MI RUTA ================= -->
+                <section id="sec-ruta" class="dashboard-section fade-in">
+                    <div class="section-header">
+                        <h2>Mi Ruta Asignada</h2>
+                        <p>Detalles y mapa de tu recorrido para el turno actual.</p>
+                    </div>
+                    <!-- Contenido placeholder -->
+                    <div class="placeholder-content">
+                        <i class="fa-solid fa-map-location-dot" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <p>Módulo de visualización de mapa en desarrollo.</p>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: MI CAMIÓN ================= -->
+                <section id="sec-camion" class="dashboard-section fade-in">
+                    <div class="section-header">
+                        <h2>Mi Camión</h2>
+                        <p>Estado, mantenimiento y checklist del vehículo.</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fa-solid fa-truck-moving" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <p>Módulo de gestión de flota en desarrollo.</p>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: REGISTRAR RECOLECCIONES ================= -->
+                <section id="sec-recolecciones" class="dashboard-section fade-in">
+                    <div class="section-header">
+                        <h2>Registrar Recolecciones</h2>
+                        <p>Confirma el recojo en los puntos de acopio de tu ruta.</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fa-solid fa-clipboard-check" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <p>Módulo de check-in de recolecciones en desarrollo.</p>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: REPORTAR INCIDENCIAS ================= -->
+                <section id="sec-incidencias" class="dashboard-section fade-in">
+                    <div class="section-header">
+                        <h2>Reportar Incidencias</h2>
+                        <p>Informa sobre problemas en la vía pública o con tu vehículo.</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fa-solid fa-triangle-exclamation" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <p>Módulo de reportes en desarrollo.</p>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: NOTIFICACIONES ================= -->
+                <section id="sec-notificaciones" class="dashboard-section fade-in">
+                    <div class="section-header">
+                        <h2>Notificaciones</h2>
+                        <p>Avisos de central y actualizaciones de ruta.</p>
+                    </div>
+                    <div class="placeholder-content">
+                        <i class="fa-regular fa-bell" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <p>No tienes notificaciones nuevas.</p>
+                    </div>
+                </section>
+
+                <!-- ================= SECCIÓN: PERFIL ================= -->
+                <section id="sec-perfil" class="dashboard-section fade-in">
+                    <div class="section-header">
+                        <h2>Mi Perfil</h2>
+                        <p>Gestiona tu información personal.</p>
+                    </div>
+
+                    <div class="profile-container">
+                        <div class="profile-card">
+                            <div class="profile-avatar-large" id="profileAvatar">O</div>
+                            <h3 id="profileName">Cargando...</h3>
+                            <p id="profileRole">Operador</p>
+                        </div>
+                        
+                        <div class="profile-details-form">
+                            <form class="modern-form">
+                                <div class="form-group">
+                                    <label>Nombre Completo</label>
+                                    <input type="text" id="inputProfileName" readonly>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>DNI</label>
+                                        <input type="text" id="inputProfileDni" readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Correo Electrónico</label>
+                                        <input type="email" id="inputProfileEmail" readonly>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Script SPA Dashboard Operador -->
+    <script src="js/dashboard-operador.js"></script>
+</body>
+
+</html>

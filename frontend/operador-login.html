@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Operador | Sistema de Gestión de Residuos Wanchaq</title>
+
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Estilos CSS Base Ciudadano -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Estilos Liquid Glass -->
+    <link rel="stylesheet" href="css/admin-login.css">
+</head>
+
+<body class="admin-body">
+
+    <!-- Fondo animado (Liquid Effect) -->
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="auth-layout admin-layout">
+
+        <!-- Panel Izquierdo: Ilustración y Mensaje Institucional -->
+        <section class="auth-panel admin-panel">
+            <div class="panel-content">
+                <div class="panel-illustration admin-illustration">
+                    <i class="fa-solid fa-truck-fast"
+                        style="font-size: 8rem; color: rgba(255,255,255,0.9); filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));"></i>
+                </div>
+                <h2 class="panel-title">Panel de Operadores</h2>
+                <p class="panel-description">
+                    Acceso para conductores y operarios de recolección. Consulta tus rutas asignadas, reporta incidencias y mantén tu unidad actualizada.
+                </p>
+                <div class="panel-features">
+                    <div class="panel-feature">
+                        <div class="panel-feature-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <span>Visualización de rutas en tiempo real.</span>
+                    </div>
+                    <div class="panel-feature">
+                        <div class="panel-feature-icon">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                        </div>
+                        <span>Registro eficiente de puntos de acopio.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel Derecho: Formulario de Inicio de Sesión (Estilo Liquid Glass) -->
+        <section class="auth-form-section glass-section">
+            <div class="form-container glass-panel">
+
+                <!-- Banner de seguridad visual -->
+                <div class="security-banner">
+                    <i class="fa-solid fa-truck"></i>
+                    <span>Acceso para personal de recolección</span>
+                </div>
+
+                <!-- Logo y Cabecera -->
+                <header class="form-header admin-header">
+                    <div class="logo-container">
+                        <i class="fa-solid fa-leaf logo-icon"></i>
+                    </div>
+                    <h1 class="form-title text-white">Iniciar Sesión</h1>
+                    <p class="form-subtitle text-muted">Ingresa al portal de operadores de Wanchaq</p>
+                </header>
+
+                <!-- Mensaje de Feedback -->
+                <div id="mensaje-error" class="mensaje-error" style="display: none;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span id="texto-error">Error al iniciar sesión</span>
+                </div>
+
+                <!-- Formulario -->
+                <form id="form-operador-login" class="login-form">
+
+                    <!-- Campo Correo -->
+                    <div class="form-group">
+                        <label for="correo">
+                            <i class="fa-regular fa-envelope"></i> Correo Institucional
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="email" id="correo" name="correo" required placeholder="operador@wanchaq.gob.pe">
+                            <div class="focus-border"></div>
+                        </div>
+                    </div>
+
+                    <!-- Campo Contraseña -->
+                    <div class="form-group">
+                        <label for="password">
+                            <i class="fa-solid fa-lock"></i> Contraseña
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" name="password" required placeholder="••••••••">
+                            <button type="button" class="toggle-password" id="btn-toggle-password"
+                                aria-label="Mostrar/Ocultar contraseña">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
+                            <div class="focus-border"></div>
+                        </div>
+                    </div>
+
+                    <!-- Opciones adicionales -->
+                    <div class="form-options">
+                        <a href="#" class="forgot-password">¿Recuperar acceso?</a>
+                    </div>
+
+                    <!-- Botón de Envío -->
+                    <button type="submit" class="btn-submit" id="btn-submit">
+                        <span>Acceder como Operador</span>
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        <div class="spinner" style="display: none;"><i class="fa-solid fa-circle-notch fa-spin"></i>
+                        </div>
+                    </button>
+                </form>
+
+                <div class="form-footer">
+                    <p>¿Aún no tienes cuenta? <a href="operador-register.html">Registrar cuenta</a></p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Modal OTP Apple-Style (Oculto por defecto) -->
+    <div id="otp-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-glass-panel">
+            <div class="modal-header">
+                <div class="modal-icon-container">
+                    <i class="fa-solid fa-shield-check modal-icon"></i>
+                </div>
+                <h2 class="modal-title">Verificación de Seguridad</h2>
+                <p class="modal-subtitle">Hemos enviado un código de acceso temporal a su correo.</p>
+            </div>
+
+            <div id="modal-mensaje" class="mensaje-error" style="display: none; margin-bottom: 15px;">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="modal-texto">Código incorrecto</span>
+            </div>
+
+            <div class="otp-section">
+                <label class="otp-label">Ingresa el código</label>
+                <div class="otp-boxes-container">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]"
+                        autocomplete="off" data-index="0">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]"
+                        autocomplete="off" data-index="1">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]"
+                        autocomplete="off" data-index="2">
+                    <div class="otp-separator">—</div>
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]"
+                        autocomplete="off" data-index="3">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]"
+                        autocomplete="off" data-index="4">
+                    <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]"
+                        autocomplete="off" data-index="5">
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" id="btn-verify-otp" class="btn-submit">
+                    <span>Verificar Acceso</span>
+                    <i class="fa-solid fa-check"></i>
+                    <div class="spinner" style="display: none;"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+                </button>
+                <button type="button" id="btn-resend-otp" class="btn-resend">
+                    <i class="fa-solid fa-rotate-right"></i> Reenviar código
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/operador-login.js"></script>
+</body>
+
+</html>
